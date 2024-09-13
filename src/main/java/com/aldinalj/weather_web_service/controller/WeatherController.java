@@ -1,5 +1,6 @@
 package com.aldinalj.weather_web_service.controller;
 
+import com.aldinalj.weather_web_service.model.AirQualityModel;
 import com.aldinalj.weather_web_service.model.Weather;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +37,18 @@ public class WeatherController {
                 .bodyToMono(Weather.class);
     }
 
+    @GetMapping("/airquality")
+    public Mono<AirQualityModel> getWeatherForWeek() {
+        return weatherWebClientConfig.get()
+                .uri(airQuality -> airQuality
+                        .queryParam("key", apiKey)
+                        .queryParam("city", "Stockholm")
+                        .build()
+                )
+                .retrieve()
+                .bodyToMono(AirQualityModel.class);
+
+    }
 
 }
 

@@ -7,7 +7,7 @@ public class Weather {
     @JsonProperty("data")
     private List<Observation> data;
 
-    // Getter and setter
+
     public List<Observation> getData() {
         return data;
     }
@@ -218,7 +218,6 @@ public class Weather {
         @JsonProperty("description")
         private String description;
 
-        // Getters and setters
         public String getIcon() {
             return icon;
         }
