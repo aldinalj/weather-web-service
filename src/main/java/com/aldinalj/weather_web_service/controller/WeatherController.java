@@ -10,7 +10,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/weather")
 public class WeatherController {
 
     private final WebClient weatherWebClientConfig;
@@ -24,7 +23,7 @@ public class WeatherController {
                 .build();
     }
 
-    @GetMapping("/today")
+    @GetMapping("/currentweather")
     public Mono<Weather> getWeatherForToday() {
 
         return weatherWebClientConfig.get()
