@@ -12,12 +12,14 @@ public class Activity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private int code;
 
 
     public Activity() {}
 
-    public Activity(String name) {
+    public Activity(String name, int code) {
         this.name = name;
+        this.code = code;
     }
 
     public Long getId() {
@@ -30,5 +32,13 @@ public class Activity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 }
