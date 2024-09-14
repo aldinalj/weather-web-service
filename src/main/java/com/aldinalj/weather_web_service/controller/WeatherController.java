@@ -22,7 +22,7 @@ public class WeatherController {
                 .build();
     }
 
-    @GetMapping("/currentweather")
+    @GetMapping("/current-weather")
     public Mono<Weather> getWeatherForToday() {
 
         return weatherWebClientConfig.get()
@@ -35,7 +35,7 @@ public class WeatherController {
                 .bodyToMono(Weather.class);
     }
 
-    @GetMapping("/airquality")
+    @GetMapping("/air-quality")
     public Mono<AirQualityModel> getWeatherForWeek() {
         return weatherWebClientConfig.get()
                 .uri(airQuality -> airQuality

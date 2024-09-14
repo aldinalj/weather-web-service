@@ -19,7 +19,7 @@ public class AdminController {
         this.activityRepository = activityRepository;
     }
 
-    @PostMapping("/postActivity")
+    @PostMapping("/post-activity")
     public ResponseEntity<Activity> postActivity(@RequestBody Activity activity) {
 
         return ResponseEntity
@@ -33,10 +33,25 @@ public class AdminController {
 
         Optional<Activity> activity = activityRepository.findById(id);
 
-        if (activity.isEmpty()) {
-            return ResponseEntity.noContent().build();
+        if (activity.isPresent()) {
+            return ResponseEntity.ok().body(activity);
         }
 
-        return ResponseEntity.ok().body(activity);
+            return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/delete-activity/{id}")
+    public ResponseEntity<Void> deleteActivityById(@PathVariable("id") Long id) {
+
+        Optional<Activity> activity = activityRepository.findById(id);
+
+        if (activity.isPresent()) {
+
+            activityRepository.delete(activity.get());
+            return ResponseEntity.ok().build();
+
+        }
+
+            return ResponseEntity.noContent().build();
     }
 }
