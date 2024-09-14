@@ -13,6 +13,7 @@ public class Activity {
     private Long id;
     private String name;
 
+
     public Activity() {}
 
     public Activity(String name) {
