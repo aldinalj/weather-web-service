@@ -82,6 +82,8 @@ public class AdminController {
                 activity.get().setCode(code);
             }
 
+            activityRepository.save(activity.get());
+
             return ResponseEntity.ok().build();
 
     }
