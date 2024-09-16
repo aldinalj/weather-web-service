@@ -31,7 +31,7 @@ public class AdminController {
 
     }
 
-    @GetMapping("/activity/{id}")
+/*    @GetMapping("/activity/{id}")
     public ResponseEntity<Optional<Activity>> findActivityById(@PathVariable("id") Long id) {
 
         Optional<Activity> activity = activityRepository.findById(id);
@@ -43,7 +43,7 @@ public class AdminController {
 
         return ResponseEntity.ok().body(activity);
 
-    }
+    }*/
 
     @DeleteMapping("/delete-activity/{id}")
     public ResponseEntity<Void> deleteActivityById(@PathVariable("id") Long id) {
