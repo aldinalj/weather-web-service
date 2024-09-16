@@ -31,29 +31,13 @@ public class AdminController {
 
     }
 
-/*    @GetMapping("/activity/{id}")
-    public ResponseEntity<Optional<Activity>> findActivityById(@PathVariable("id") Long id) {
-
-        Optional<Activity> activity = activityRepository.findById(id);
-
-        if (activity.isEmpty()) {
-            return ResponseEntity.noContent().build();
-
-        }
-
-        return ResponseEntity.ok().body(activity);
-
-    }*/
-
     @DeleteMapping("/delete-activity/{id}")
     public ResponseEntity<Void> deleteActivityById(@PathVariable("id") Long id) {
 
         Optional<Activity> activity = activityRepository.findById(id);
 
         if (activity.isEmpty()) {
-
             return ResponseEntity.noContent().build();
-
         }
 
         activityRepository.delete(activity.get());
@@ -72,7 +56,6 @@ public class AdminController {
         Optional<Activity> activity = activityRepository.findById(id);
 
         if (activity.isEmpty()) {
-
             return ResponseEntity.noContent().build();
         }
 

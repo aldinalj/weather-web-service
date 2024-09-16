@@ -29,7 +29,6 @@ public class ActivityController {
 
         if (activity.isEmpty()) {
             return ResponseEntity.noContent().build();
-
         }
 
         return ResponseEntity.ok().body(activity);
@@ -39,6 +38,10 @@ public class ActivityController {
     public ResponseEntity<List<Activity>> findActivitiesByCode(@PathVariable("code") Integer code) {
 
         List<Activity> activities = activityRepository.findActivitiesByCode(code);
+
+        if (activities.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
 
         return ResponseEntity.ok(activities);
     }
