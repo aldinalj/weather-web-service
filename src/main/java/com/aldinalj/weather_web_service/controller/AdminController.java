@@ -61,7 +61,7 @@ public class AdminController {
 
     }
 
-    @PutMapping("/update-activity/{id}")
+    @PatchMapping("/update-activity/{id}")
     public ResponseEntity<Void> updateActivityById(
             @PathVariable("id") Long id,
             @RequestParam (required = false) String name,
