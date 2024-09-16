@@ -12,5 +12,4 @@ public interface ActivityRepository extends JpaRepository<Activity, Long> {
 
     List<Activity> findActivitiesByCode(Integer code);
 
-
 }
