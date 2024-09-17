@@ -23,22 +23,22 @@ public class Activity {
 
     @JsonProperty("temp_max")
     @Column(name = "temperature_max")
-    private double temperatureMax;
+    private Integer temperatureMax;
 
     @JsonProperty("price_min")
     @Column(name = "price_min")
-    private double priceMin;
+    private Integer priceMin;
 
     @JsonProperty("price_max")
     @Column(name = "price_max")
-    private double priceMax;
+    private Integer priceMax;
 
 
 
 
     public Activity() {}
 
-    public Activity(String name, Integer code, String description, Integer temperatureMin, double temperatureMax, double priceMin, double priceMax) {
+    public Activity(String name, Integer code, String description, Integer temperatureMin, Integer temperatureMax, Integer priceMin, Integer priceMax) {
         this.name = name;
         this.code = code;
         this.description = description;
@@ -84,27 +84,27 @@ public class Activity {
         this.temperatureMin = temperatureMin;
     }
 
-    public double getTemperatureMax() {
+    public Integer getTemperatureMax() {
         return temperatureMax;
     }
 
-    public void setTemperatureMax(double temperatureMax) {
+    public void setTemperatureMax(Integer temperatureMax) {
         this.temperatureMax = temperatureMax;
     }
 
-    public double getPriceMin() {
+    public Integer getPriceMin() {
         return priceMin;
     }
 
-    public void setPriceMin(double priceMin) {
+    public void setPriceMin(Integer priceMin) {
         this.priceMin = priceMin;
     }
 
-    public double getPriceMax() {
+    public Integer getPriceMax() {
         return priceMax;
     }
 
-    public void setPriceMax(double priceMax) {
+    public void setPriceMax(Integer priceMax) {
         this.priceMax = priceMax;
     }
 }

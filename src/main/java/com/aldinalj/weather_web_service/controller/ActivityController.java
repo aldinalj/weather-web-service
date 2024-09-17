@@ -22,6 +22,16 @@ public class ActivityController {
     }
 
 
+    @GetMapping("/activities")
+    public ResponseEntity<List<Activity>> getAllActivities() {
+
+        List<Activity> allActivities = activityRepository.findAll();
+
+        return ResponseEntity.ok().body(allActivities);
+    }
+
+
+
     @GetMapping("/activity/{id}")
     public ResponseEntity<Optional<Activity>> findActivityById(@PathVariable("id") Long id) {
 

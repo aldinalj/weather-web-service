@@ -25,10 +25,15 @@ public class AdminController {
     @PostMapping("/post-activity")
     public ResponseEntity<Activity> postActivity(@RequestBody Activity activity) {
 
+        if (!allowedCodes.contains(activity.getCode())) {
+            return ResponseEntity
+                    .status(400)
+                    .body(activity);
+        }
+
         return ResponseEntity
                 .status(201)
                 .body(activityRepository.save(activity));
-
     }
 
     @DeleteMapping("/delete-activity/{id}")
@@ -42,7 +47,6 @@ public class AdminController {
 
         activityRepository.delete(activity.get());
         return ResponseEntity.ok().build();
-
     }
 
     @PatchMapping("/update-activity/{id}")
