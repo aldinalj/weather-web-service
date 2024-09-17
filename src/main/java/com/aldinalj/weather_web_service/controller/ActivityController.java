@@ -31,7 +31,6 @@ public class ActivityController {
     }
 
 
-
     @GetMapping("/activity/{id}")
     public ResponseEntity<Optional<Activity>> findActivityById(@PathVariable("id") Long id) {
 

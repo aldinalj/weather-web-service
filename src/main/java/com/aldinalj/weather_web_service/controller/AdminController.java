@@ -1,5 +1,6 @@
 package com.aldinalj.weather_web_service.controller;
 
+import com.aldinalj.weather_web_service.exception.InvalidCodeException;
 import com.aldinalj.weather_web_service.model.Activity;
 import com.aldinalj.weather_web_service.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,5 +74,32 @@ public class AdminController {
 
             return ResponseEntity.ok().build();
 
+    }
+
+    @PutMapping("/put-activity/{id}")
+    public ResponseEntity<Activity> putActivity (
+            @PathVariable("id") Long id,
+            @RequestBody Activity updatedActivity
+    ) {
+
+        if (activityRepository.findById(id).isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        if(!allowedCodes.contains(updatedActivity.getCode())) {
+            throw new InvalidCodeException();
+        }
+
+        Activity existingActivity = activityRepository.findById(id).get();
+
+        existingActivity.setName(updatedActivity.getName());
+        existingActivity.setCode(updatedActivity.getCode());
+        existingActivity.setDescription(updatedActivity.getDescription());
+        existingActivity.setTemperatureMin(updatedActivity.getTemperatureMin());
+        existingActivity.setTemperatureMax(updatedActivity.getTemperatureMax());
+        existingActivity.setPriceMin(updatedActivity.getPriceMin());
+        existingActivity.setPriceMax(updatedActivity.getPriceMax());
+
+        return ResponseEntity.ok(activityRepository.save(existingActivity));
     }
 }
