@@ -17,7 +17,7 @@ public class AdminController {
 
     private final ActivityRepository activityRepository;
 
-    List<Integer> allowedCodes = Arrays.asList(2, 5, 6, 7, 8);
+    List<Integer> allowedWeatherCodes = Arrays.asList(200, 500, 600, 700, 800);
     @Autowired
     public AdminController(ActivityRepository activityRepository) {
         this.activityRepository = activityRepository;
@@ -26,7 +26,7 @@ public class AdminController {
     @PostMapping("/post-activity")
     public ResponseEntity<Activity> postActivity(@RequestBody Activity activity) {
 
-        if (!allowedCodes.contains(activity.getCode())) {
+        if (!allowedWeatherCodes.contains(activity.getWeatherCode())) {
             return ResponseEntity
                     .status(400)
                     .body(activity);
@@ -54,7 +54,7 @@ public class AdminController {
     public ResponseEntity<Void> updateActivityById(
             @PathVariable("id") Long id,
             @RequestParam (required = false) String name,
-            @RequestParam (required = false) int code
+            @RequestParam (required = false) int weatherCode
 
     ) {
 
@@ -66,8 +66,8 @@ public class AdminController {
 
             activity.get().setName(name);
 
-            if (allowedCodes.contains(code)) {
-                activity.get().setCode(code);
+            if (allowedWeatherCodes.contains(weatherCode)) {
+                activity.get().setWeatherCode(weatherCode);
             }
 
             activityRepository.save(activity.get());
@@ -86,14 +86,14 @@ public class AdminController {
             return ResponseEntity.noContent().build();
         }
 
-        if(!allowedCodes.contains(updatedActivity.getCode())) {
+        if(!allowedWeatherCodes.contains(updatedActivity.getWeatherCode())) {
             throw new InvalidCodeException();
         }
 
         Activity existingActivity = activityRepository.findById(id).get();
 
         existingActivity.setName(updatedActivity.getName());
-        existingActivity.setCode(updatedActivity.getCode());
+        existingActivity.setWeatherCode(updatedActivity.getWeatherCode());
         existingActivity.setDescription(updatedActivity.getDescription());
         existingActivity.setTemperatureMin(updatedActivity.getTemperatureMin());
         existingActivity.setTemperatureMax(updatedActivity.getTemperatureMax());

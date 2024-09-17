@@ -10,10 +10,14 @@ public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
-    private Integer code;
+    @JsonProperty("weather_code")
+    private Integer weatherCode;
+
     @Size(max = 1000)
     private String description;
 
@@ -33,14 +37,11 @@ public class Activity {
     @Column(name = "price_max")
     private Integer priceMax;
 
-
-
-
     public Activity() {}
 
-    public Activity(String name, Integer code, String description, Integer temperatureMin, Integer temperatureMax, Integer priceMin, Integer priceMax) {
+    public Activity(String name, Integer weatherCode, String description, Integer temperatureMin, Integer temperatureMax, Integer priceMin, Integer priceMax) {
         this.name = name;
-        this.code = code;
+        this.weatherCode = weatherCode;
         this.description = description;
         this.temperatureMin = temperatureMin;
         this.temperatureMax = temperatureMax;
@@ -60,12 +61,12 @@ public class Activity {
         this.name = name;
     }
 
-    public Integer getCode() {
-        return code;
+    public Integer getWeatherCode() {
+        return weatherCode;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setWeatherCode(Integer code) {
+        this.weatherCode = code;
     }
 
     public String getDescription() {
