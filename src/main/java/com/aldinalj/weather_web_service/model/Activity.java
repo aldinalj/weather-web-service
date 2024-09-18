@@ -65,8 +65,8 @@ public class Activity {
         return weatherCode;
     }
 
-    public void setWeatherCode(Integer code) {
-        this.weatherCode = code;
+    public void setWeatherCode(Integer weatherCode) {
+        this.weatherCode = weatherCode;
     }
 
     public String getDescription() {

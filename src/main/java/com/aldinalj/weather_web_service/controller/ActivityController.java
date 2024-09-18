@@ -44,9 +44,9 @@ public class ActivityController {
     }
 
     @GetMapping("/activities/{code}")
-    public ResponseEntity<List<Activity>> findActivitiesByCode(@PathVariable("code") Integer code) {
+    public ResponseEntity<List<Activity>> findActivitiesByCode(@PathVariable("code") Integer WeatherCode) {
 
-        List<Activity> activities = activityRepository.findActivitiesByCode(code);
+        List<Activity> activities = activityRepository.findActivitiesByWeatherCode(WeatherCode);
 
         if (activities.isEmpty()) {
             return ResponseEntity.noContent().build();

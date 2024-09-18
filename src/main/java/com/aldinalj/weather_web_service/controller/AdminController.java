@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.Query;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -101,5 +102,15 @@ public class AdminController {
         existingActivity.setPriceMax(updatedActivity.getPriceMax());
 
         return ResponseEntity.ok(activityRepository.save(existingActivity));
+    }
+
+
+
+    @DeleteMapping("/truncate-table")
+    public ResponseEntity<Void> truncateActivities() {
+
+        activityRepository.truncateTable();
+
+        return ResponseEntity.noContent().build();
     }
 }
