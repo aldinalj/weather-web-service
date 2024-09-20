@@ -6,8 +6,6 @@ import com.aldinalj.weather_web_service.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.management.Query;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +31,11 @@ public class AdminController {
                     .body(activity);
         }
 
+        if (activity.getName().trim().isEmpty()) {
+
+            return ResponseEntity.badRequest().build();
+        }
+
         return ResponseEntity
                 .status(201)
                 .body(activityRepository.save(activity));
@@ -51,11 +54,11 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/update-activity/{id}")
+    @PatchMapping("/patch-activity/{id}")
     public ResponseEntity<Void> updateActivityById(
             @PathVariable("id") Long id,
             @RequestParam (required = false) String name,
-            @RequestParam (required = false) int weatherCode
+            @RequestParam (required = false) Integer weatherCode
 
     ) {
 
@@ -91,6 +94,11 @@ public class AdminController {
             throw new InvalidCodeException();
         }
 
+        if (updatedActivity.getName().isEmpty()) {
+
+            ResponseEntity.badRequest().build();
+        }
+
         Activity existingActivity = activityRepository.findById(id).get();
 
         existingActivity.setName(updatedActivity.getName());
@@ -103,8 +111,6 @@ public class AdminController {
 
         return ResponseEntity.ok(activityRepository.save(existingActivity));
     }
-
-
 
     @DeleteMapping("/truncate-table")
     public ResponseEntity<Void> truncateActivities() {

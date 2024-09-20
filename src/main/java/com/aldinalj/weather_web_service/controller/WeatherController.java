@@ -24,8 +24,6 @@ public class WeatherController {
     @GetMapping("/weather")
     public Mono<Weather> getWeatherForToday(@RequestParam ("city") String city) {
 
-
-
         return weatherWebClientConfig.get()
                 .uri(weather -> weather
                         .queryParam("key", apiKey)
