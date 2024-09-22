@@ -64,7 +64,6 @@ public class AdminController {
             @PathVariable("id") Long id,
             @RequestParam (required = false) String name,
             @RequestParam (required = false) Integer weatherCode
-
     ) {
 
         Optional<Activity> activity = activityRepository.findById(id);
@@ -113,10 +112,9 @@ public class AdminController {
                     .toList();
 
             return ResponseEntity.badRequest().body(errorMessages);
-
         }
 
-        Activity existingActivity = activityRepository.findById(id).get();
+        Activity existingActivity = activity.get();
 
         existingActivity.setName(updatedActivity.getName());
         existingActivity.setWeatherCode(updatedActivity.getWeatherCode());
