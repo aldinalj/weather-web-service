@@ -2,12 +2,7 @@ package com.aldinalj.weather_web_service.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Activity {
@@ -30,26 +25,26 @@ public class Activity {
 
     @JsonProperty("temp_min")
     @Column(name = "temperature_min")
-    @Min(value = -100, message = "Invalid minimum temperature")
-    @Max(value = 50, message = "Invalid maximum temperature")
+    @Min(value = -100, message = "Minimum temperature cannot be less than -100°C")
+    @Max(value = 50, message = "Minimum temperature cannot exceed 50°C")
     private Integer temperatureMin;
 
     @JsonProperty("temp_max")
     @Column(name = "temperature_max")
-    @Min(value = -100, message = "Invalid minimum temperature")
-    @Max(value = 50, message = "Invalid maximum temperature")
+    @Min(value = -100, message = "Maximum temperature cannot be less than -100°C")
+    @Max(value = 50, message = "Maximum temperature cannot exceed 50°C")
     private Integer temperatureMax;
 
     @JsonProperty("price_min")
     @Column(name = "price_min")
-    @Min(value = 0, message = "Minimum price cannot be less than 0")
-    @Max(value = 5000, message = "Minimum price cannot be more than 5000")
+    @Min(value = 0, message = "Minimum price cannot be less than 0kr")
+    @Max(value = 5000, message = "Minimum price cannot be more than 5000kr")
     private Integer priceMin;
 
     @JsonProperty("price_max")
     @Column(name = "price_max")
-    @Min(value = 0, message = "Maximum price cannot be less than 0")
-    @Max(value = 5000, message = "Maximum price cannot be more than 5000")
+    @Min(value = 0, message = "Maximum price cannot be less than 0kr")
+    @Max(value = 5000, message = "Maximum price cannot be more than 5000kr")
     private Integer priceMax;
 
     public Activity() {}

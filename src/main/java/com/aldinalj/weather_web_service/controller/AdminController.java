@@ -28,15 +28,17 @@ public class AdminController {
     public ResponseEntity<?> postActivity(@Valid @RequestBody Activity activity, BindingResult result) {
 
         if (!allowedWeatherCodes.contains(activity.getWeatherCode())) {
-            return ResponseEntity
-                    .status(400)
-                    .body("Weather code is invalid. Please use one of these instead: 200, 500, 600, 700, 800.");
+            throw new InvalidCodeException();
         }
 
-        if (result.hasFieldErrors("name")) {
+        if (result.hasFieldErrors()) {
 
-            String errorMessage = result.getFieldError("name").getDefaultMessage();
-            return ResponseEntity.badRequest().body(errorMessage);
+            List<String> errorMessages = result.getFieldErrors().stream()
+                    .map(error -> "Invalid input on field '" + error.getField() + "': " + error.getDefaultMessage())
+                    .toList();
+
+            return ResponseEntity.badRequest().body(errorMessages);
+
         }
 
         return ResponseEntity
@@ -71,17 +73,24 @@ public class AdminController {
             return ResponseEntity.noContent().build();
         }
 
-            activity.get().setName(name);
+        if (name != null && name.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Name cannot be empty");
+        }
 
-            if (allowedWeatherCodes.contains(weatherCode)) {
-                activity.get().setWeatherCode(weatherCode);
-            }
+        if (weatherCode != null && !allowedWeatherCodes.contains(weatherCode)) {
 
-            activityRepository.save(activity.get());
+            throw new InvalidCodeException();
+        }
 
-            return ResponseEntity.ok().build();
+        activity.get().setWeatherCode(weatherCode);
+        activity.get().setName(name);
+
+        return ResponseEntity.ok().body(activityRepository.save(activity.get()));
 
     }
+
+
+
 
     @PutMapping("/put-activity/{id}")
     public ResponseEntity<?> putActivityById (
@@ -98,10 +107,14 @@ public class AdminController {
             throw new InvalidCodeException();
         }
 
-        if (result.hasFieldErrors("name")) {
+        if (result.hasFieldErrors()) {
 
-            String errorMessage = result.getFieldError("name").getDefaultMessage();
-            return ResponseEntity.badRequest().body(errorMessage);
+            List<String> errorMessages = result.getFieldErrors().stream()
+                    .map(error -> "Invalid input on field '" + error.getField() + "': " + error.getDefaultMessage())
+                    .toList();
+
+            return ResponseEntity.badRequest().body(errorMessages);
+
         }
 
         Activity existingActivity = activityRepository.findById(id).get();
