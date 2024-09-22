@@ -52,11 +52,11 @@ public class AdminController {
         Optional<Activity> activity = activityRepository.findById(id);
 
         if (activity.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.notFound().build();
         }
 
         activityRepository.delete(activity.get());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/patch-activity/{id}")
@@ -70,7 +70,7 @@ public class AdminController {
         Optional<Activity> activity = activityRepository.findById(id);
 
         if (activity.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.notFound().build();
         }
 
         if (name != null && name.trim().isEmpty()) {
@@ -89,9 +89,6 @@ public class AdminController {
 
     }
 
-
-
-
     @PutMapping("/put-activity/{id}")
     public ResponseEntity<?> putActivityById (
             @PathVariable("id") Long id,
@@ -99,8 +96,10 @@ public class AdminController {
             BindingResult result
     ) {
 
-        if (activityRepository.findById(id).isEmpty()) {
-            return ResponseEntity.noContent().build();
+        Optional<Activity> activity = activityRepository.findById(id);
+
+        if (activity.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
 
         if(!allowedWeatherCodes.contains(updatedActivity.getWeatherCode())) {

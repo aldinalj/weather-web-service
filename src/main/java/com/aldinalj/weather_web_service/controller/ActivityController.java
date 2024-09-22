@@ -37,7 +37,7 @@ public class ActivityController {
         Optional<Activity> activity = activityRepository.findById(id);
 
         if (activity.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok().body(activity);
@@ -47,10 +47,6 @@ public class ActivityController {
     public ResponseEntity<List<Activity>> findActivitiesByCode(@PathVariable("code") Integer WeatherCode) {
 
         List<Activity> activities = activityRepository.findActivitiesByWeatherCode(WeatherCode);
-
-        if (activities.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
 
         return ResponseEntity.ok(activities);
     }
