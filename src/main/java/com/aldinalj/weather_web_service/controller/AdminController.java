@@ -3,8 +3,10 @@ package com.aldinalj.weather_web_service.controller;
 import com.aldinalj.weather_web_service.exception.InvalidCodeException;
 import com.aldinalj.weather_web_service.model.Activity;
 import com.aldinalj.weather_web_service.repository.ActivityRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.List;
@@ -23,17 +25,18 @@ public class AdminController {
     }
 
     @PostMapping("/post-activity")
-    public ResponseEntity<Activity> postActivity(@RequestBody Activity activity) {
+    public ResponseEntity<?> postActivity(@Valid @RequestBody Activity activity, BindingResult result) {
 
         if (!allowedWeatherCodes.contains(activity.getWeatherCode())) {
             return ResponseEntity
                     .status(400)
-                    .body(activity);
+                    .body("Weather code is invalid. Please use one of these instead: 200, 500, 600, 700, 800.");
         }
 
-        if (activity.getName().trim().isEmpty()) {
+        if (result.hasFieldErrors("name")) {
 
-            return ResponseEntity.badRequest().build();
+            String errorMessage = result.getFieldError("name").getDefaultMessage();
+            return ResponseEntity.badRequest().body(errorMessage);
         }
 
         return ResponseEntity
@@ -55,7 +58,7 @@ public class AdminController {
     }
 
     @PatchMapping("/patch-activity/{id}")
-    public ResponseEntity<Void> updateActivityById(
+    public ResponseEntity<?> patchActivityById(
             @PathVariable("id") Long id,
             @RequestParam (required = false) String name,
             @RequestParam (required = false) Integer weatherCode
@@ -81,9 +84,10 @@ public class AdminController {
     }
 
     @PutMapping("/put-activity/{id}")
-    public ResponseEntity<Activity> putActivity (
+    public ResponseEntity<?> putActivityById (
             @PathVariable("id") Long id,
-            @RequestBody Activity updatedActivity
+            @RequestBody Activity updatedActivity,
+            BindingResult result
     ) {
 
         if (activityRepository.findById(id).isEmpty()) {
@@ -94,9 +98,10 @@ public class AdminController {
             throw new InvalidCodeException();
         }
 
-        if (updatedActivity.getName().isEmpty()) {
+        if (result.hasFieldErrors("name")) {
 
-            ResponseEntity.badRequest().build();
+            String errorMessage = result.getFieldError("name").getDefaultMessage();
+            return ResponseEntity.badRequest().body(errorMessage);
         }
 
         Activity existingActivity = activityRepository.findById(id).get();

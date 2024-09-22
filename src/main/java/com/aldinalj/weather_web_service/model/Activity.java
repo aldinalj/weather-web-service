@@ -2,6 +2,9 @@ package com.aldinalj.weather_web_service.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -12,9 +15,11 @@ public class Activity {
     private Long id;
 
     @Column(nullable = false)
+    @NotBlank(message = "Name is required")
     private String name;
 
     @Column(nullable = false)
+    @NotNull
     @JsonProperty("weather_code")
     private Integer weatherCode;
 
