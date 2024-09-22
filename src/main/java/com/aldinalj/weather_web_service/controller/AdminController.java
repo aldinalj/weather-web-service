@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/admin/activity")
 public class AdminController {
 
     private final ActivityRepository activityRepository;
@@ -24,7 +24,7 @@ public class AdminController {
         this.activityRepository = activityRepository;
     }
 
-    @PostMapping("/post-activity")
+    @PostMapping()
     public ResponseEntity<?> postActivity(@Valid @RequestBody Activity activity, BindingResult result) {
 
         if (!allowedWeatherCodes.contains(activity.getWeatherCode())) {
@@ -38,7 +38,6 @@ public class AdminController {
                     .toList();
 
             return ResponseEntity.badRequest().body(errorMessages);
-
         }
 
         return ResponseEntity
@@ -46,7 +45,7 @@ public class AdminController {
                 .body(activityRepository.save(activity));
     }
 
-    @DeleteMapping("/delete-activity/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteActivityById(@PathVariable("id") Long id) {
 
         Optional<Activity> activity = activityRepository.findById(id);
@@ -59,7 +58,7 @@ public class AdminController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/patch-activity/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> patchActivityById(
             @PathVariable("id") Long id,
             @RequestParam (required = false) String name,
@@ -85,10 +84,9 @@ public class AdminController {
         activity.get().setName(name);
 
         return ResponseEntity.ok().body(activityRepository.save(activity.get()));
-
     }
 
-    @PutMapping("/put-activity/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> putActivityById (
             @PathVariable("id") Long id,
             @RequestBody Activity updatedActivity,
@@ -127,7 +125,7 @@ public class AdminController {
         return ResponseEntity.ok(activityRepository.save(existingActivity));
     }
 
-    @DeleteMapping("/truncate-table")
+    @DeleteMapping("/truncate")
     public ResponseEntity<Void> truncateActivities() {
 
         activityRepository.truncateTable();

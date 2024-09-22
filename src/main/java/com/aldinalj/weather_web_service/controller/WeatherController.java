@@ -33,6 +33,5 @@ public class WeatherController {
                 .retrieve()
                 .bodyToMono(Weather.class);
     }
-
 }
 

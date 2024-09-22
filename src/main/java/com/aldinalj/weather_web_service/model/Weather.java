@@ -7,7 +7,6 @@ public class Weather {
     @JsonProperty("data")
     private List<Observation> data;
 
-
     public List<Observation> getData() {
         return data;
     }

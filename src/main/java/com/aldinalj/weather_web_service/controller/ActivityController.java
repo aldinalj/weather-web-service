@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +20,6 @@ public class ActivityController {
         this.activityRepository = activityRepository;
     }
 
-
     @GetMapping("/activities")
     public ResponseEntity<List<Activity>> getAllActivities() {
 
@@ -29,7 +27,6 @@ public class ActivityController {
 
         return ResponseEntity.ok().body(allActivities);
     }
-
 
     @GetMapping("/activity/{id}")
     public ResponseEntity<Optional<Activity>> findActivityById(@PathVariable("id") Long id) {

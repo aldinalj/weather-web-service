@@ -12,6 +12,5 @@ public class GlobalExceptionHandler {
         public ResponseEntity<String> handleInvalidCodeException(InvalidCodeException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
     }
 
